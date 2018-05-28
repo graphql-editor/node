@@ -10,6 +10,7 @@ import {
   SlothkingMiddlewares,
   SlothkingRunner
 } from "./types";
+export * from './types';
 import * as qs from "query-string";
 let connectedToDatabase = false;
 
