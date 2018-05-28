@@ -1,10 +1,10 @@
 {
   "name": "@slothking-online/node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
   "publishConfig": {
-    "access":"public"
+    "access": "public"
   },
   "dependencies": {
     "micro": "^9.3.1",
