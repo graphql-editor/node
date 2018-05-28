@@ -1,10 +1,11 @@
 {
-  "name": "@slothking/node",
-  "private": true,
+  "name": "@slothking-online/node",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-
+  "publishConfig": {
+    "access":"public"
+  },
   "dependencies": {
     "micro": "^9.3.1",
     "mongoose": "^5.1.1",

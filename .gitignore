@@ -2,3 +2,4 @@ node_modules/
 *.map
 lib/
 .DS_Store
+.tscache/
