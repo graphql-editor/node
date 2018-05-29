@@ -10,7 +10,7 @@ import {
   SlothkingMiddlewares,
   SlothkingRunner
 } from "./types";
-export * from './types';
+export * from "./types";
 import * as qs from "query-string";
 let connectedToDatabase = false;
 
@@ -58,6 +58,7 @@ const middlewareParser = (
   return run;
 };
 const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   if (!connectedToDatabase && databaseURL) {
     connect(databaseURL);
     connectedToDatabase = true;
