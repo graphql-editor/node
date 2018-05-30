@@ -76,7 +76,7 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
     ].join(",")
   );
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
+  if (req.method.toUpperCase() === "OPTIONS") {
     return {};
   }
   if (!connectedToDatabase && databaseURL) {
