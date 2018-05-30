@@ -58,6 +58,7 @@ const middlewareParser = (
   return run;
 };
 const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
+  res.setHeader("Access-Control-Max-Age", `${3600 * 24}`);
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", [
     "POST",
@@ -75,7 +76,10 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
     "Authorization",
     "Accept"
   ]);
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return {};
+  }
   if (!connectedToDatabase && databaseURL) {
     connect(databaseURL);
     connectedToDatabase = true;
