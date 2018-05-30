@@ -58,40 +58,27 @@ const middlewareParser = (
   return run;
 };
 const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
-  const DEFAULT_ALLOW_METHODS = [
-    "POST",
-    "GET",
-    "PUT",
-    "PATCH",
-    "DELETE",
-    "OPTIONS"
-  ];
-
-  const DEFAULT_ALLOW_HEADERS = [
-    "X-Requested-With",
-    "Access-Control-Allow-Origin",
-    "X-HTTP-Method-Override",
-    "Content-Type",
-    "Authorization",
-    "Accept"
-  ];
-
-  const DEFAULT_MAX_AGE_SECONDS = 60 * 60 * 24; // 24 hours
-
-  res.setHeader("Access-Control-Max-Age", DEFAULT_MAX_AGE_SECONDS);
-
+  res.setHeader("Access-Control-Max-Age", `${3600 * 24}`);
   res.setHeader("Access-Control-Allow-Origin", "*");
-
   res.setHeader(
     "Access-Control-Allow-Methods",
-    DEFAULT_ALLOW_METHODS.join(",")
+    ["POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS"].join(",")
   );
-
   res.setHeader(
     "Access-Control-Allow-Headers",
-    DEFAULT_ALLOW_HEADERS.join(",")
+    [
+      "X-Requested-With",
+      "Access-Control-Allow-Origin",
+      "X-HTTP-Method-Override",
+      "Content-Type",
+      "Authorization",
+      "Accept"
+    ].join(",")
   );
   res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return {};
+  }
   if (!connectedToDatabase && databaseURL) {
     connect(databaseURL);
     connectedToDatabase = true;
