@@ -59,6 +59,23 @@ const middlewareParser = (
 };
 const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", [
+    "POST",
+    "GET",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS"
+  ]);
+  res.setHeader("Access-Control-Allow-Headers", [
+    "X-Requested-With",
+    "Access-Control-Allow-Origin",
+    "X-HTTP-Method-Override",
+    "Content-Type",
+    "Authorization",
+    "Accept"
+  ]);
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
   if (!connectedToDatabase && databaseURL) {
     connect(databaseURL);
     connectedToDatabase = true;
