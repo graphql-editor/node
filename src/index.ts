@@ -60,22 +60,21 @@ const middlewareParser = (
 const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
   res.setHeader("Access-Control-Max-Age", `${3600 * 24}`);
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", [
-    "POST",
-    "GET",
-    "PUT",
-    "PATCH",
-    "DELETE",
-    "OPTIONS"
-  ]);
-  res.setHeader("Access-Control-Allow-Headers", [
-    "X-Requested-With",
-    "Access-Control-Allow-Origin",
-    "X-HTTP-Method-Override",
-    "Content-Type",
-    "Authorization",
-    "Accept"
-  ]);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    ["POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS"].join(",")
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    [
+      "X-Requested-With",
+      "Access-Control-Allow-Origin",
+      "X-HTTP-Method-Override",
+      "Content-Type",
+      "Authorization",
+      "Accept"
+    ].join(",")
+  );
   res.setHeader("Access-Control-Allow-Credentials", "true");
   if (req.method === "OPTIONS") {
     return {};
