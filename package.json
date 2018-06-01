@@ -1,6 +1,6 @@
 {
   "name": "@slothking-online/node",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -32,8 +32,8 @@
     "dev": "grunt watch",
     "test": "jest"
   },
-  "jest":{
-    "roots":[
+  "jest": {
+    "roots": [
       "lib/"
     ]
   },
