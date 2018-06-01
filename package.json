@@ -29,7 +29,13 @@
   },
   "scripts": {
     "start": "grunt",
-    "dev": "grunt watch"
+    "dev": "grunt watch",
+    "test": "jest"
+  },
+  "jest":{
+    "roots":[
+      "lib/"
+    ]
   },
   "author": "Aexol <aexol@aexol.com> (http://aexol.com)",
   "license": "ISC"
