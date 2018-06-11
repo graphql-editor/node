@@ -79,6 +79,9 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
   if (req.method.toUpperCase() === "OPTIONS") {
     return {};
   }
+  if(req.url === '/health'){
+    return {}
+  }
   if (!connectedToDatabase && databaseURL) {
     connect(databaseURL);
     connectedToDatabase = true;
@@ -106,6 +109,7 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
     })
     .reduce((a, b) => ({ ...a, ...b }));
   const parsedURL = parse(req.url);
+  
   let e = pathParser(pathEndpoints, parsedURL.pathname);
   let context = {
     arguments: {}
