@@ -13,7 +13,6 @@ import {
 export * from "./types";
 import * as qs from "query-string";
 let connectedToDatabase = false;
-
 const pathParser = (endpoints: SlothkingEndpoints, path: string) => {
   let endpointName = Object.keys(endpoints).find(k => {
     return new Pattern(`/${endpoints[k].path}`).match(path);
@@ -136,7 +135,7 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
     )({ req, res, context });
     return response;
   } catch (error) {
-    throw createError(500, error);
+    throw createError(error.statusCode || 500, error.message || error);
   }
 };
 

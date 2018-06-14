@@ -28,7 +28,7 @@
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "start": "grunt",
+    "build": "grunt",
     "dev": "grunt watch",
     "test": "jest"
   },
