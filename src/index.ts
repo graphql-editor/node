@@ -79,8 +79,8 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
   if (req.method.toUpperCase() === "OPTIONS") {
     return {};
   }
-  if(req.url === '/health'){
-    return {}
+  if (req.url === "/health") {
+    return {};
   }
   if (!connectedToDatabase && databaseURL) {
     connect(databaseURL);
@@ -109,7 +109,7 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
     })
     .reduce((a, b) => ({ ...a, ...b }));
   const parsedURL = parse(req.url);
-  
+
   let e = pathParser(pathEndpoints, parsedURL.pathname);
   let context = {
     arguments: {}
@@ -125,15 +125,19 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
       ...(await json(req))
     };
   }
-  const response = await middlewareParser(
-    e,
-    extensions.reduce((a, b) => {
-      a = { ...a, ...b.middlewares };
-      return a;
-    }, {}),
-    e.run
-  )({ req, res, context });
-  return response;
+  try {
+    const response = await middlewareParser(
+      e,
+      extensions.reduce((a, b) => {
+        a = { ...a, ...b.middlewares };
+        return a;
+      }, {}),
+      e.run
+    )({ req, res, context });
+    return response;
+  } catch (error) {
+    throw createError(500, error);
+  }
 };
 
 export default run;
