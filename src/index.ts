@@ -118,7 +118,7 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
       ...qs.parse(parsedURL.query)
     };
   }
-  if (req.headers["content-type"] === "application/json") {
+  if (req.headers["content-type"].split(";").includes("application/json")) {
     context.arguments = {
       ...context.arguments,
       ...(await json(req))
