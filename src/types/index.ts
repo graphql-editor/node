@@ -4,35 +4,37 @@ export type SlothkingArgs<ARGS = {}, CONTEXT = {}> = {
   req: IncomingMessage;
   res: ServerResponse;
   context?: {
-    arguments: {
-      [x: string]: any;
-    } & ARGS;
-    [x: string]: any;
+    arguments:ARGS;
   } & CONTEXT;
 };
 
-export type SlothkingHandler<ARGS = {}, CONTEXT = {}, RETURN = any> = (
+export type SlothkingHandler<ARGS = {}, CONTEXT = {}, RETURN = void> = (
   props: SlothkingArgs<ARGS, CONTEXT>
 ) => Promise<RETURN>;
+
 export type SlothkingMiddlewareHandler<ARGS = {}, CONTEXT = {}> = (
   fn: SlothkingHandler<ARGS, CONTEXT>
 ) => SlothkingHandler<ARGS, CONTEXT>;
-export type SlothkingEndpoint<ARGS = {}, CONTEXT = {}, RETURN = any> = {
+
+export type SlothkingEndpoint<ARGS = {}, CONTEXT = {}, RETURN = void> = {
   path: string;
   run?: SlothkingHandler<ARGS, CONTEXT, RETURN>;
   middlewares?: Array<string>;
 };
+
 export type SlothkingEndpoints = {
   [x: string]: SlothkingEndpoint;
 };
+
 export type SlothkingMiddleware<ARGS = {}, CONTEXT = {}> = {
   name: string;
   run?: SlothkingMiddlewareHandler<ARGS, CONTEXT>;
-  context?: any;
 };
+
 export type SlothkingMiddlewares = {
   [x: string]: SlothkingMiddleware;
 };
+
 export type SlothkingExtension = {
   endpoints: {
     [x: string]: SlothkingEndpoint;
@@ -42,6 +44,7 @@ export type SlothkingExtension = {
   };
   name: string;
 };
+
 export type SlothkingRunner = (
   extensions: Array<SlothkingExtension>,
   databaseURL?: string
