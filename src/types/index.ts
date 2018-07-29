@@ -8,7 +8,7 @@ export type SlothkingArgs<ARGS = {}, CONTEXT = {}> = {
   } & CONTEXT;
 };
 
-export type SlothkingHandler<ARGS = {}, CONTEXT = {}, RETURN = void> = (
+export type SlothkingHandler<ARGS = {}, CONTEXT = {}, RETURN = any> = (
   props: SlothkingArgs<ARGS, CONTEXT>
 ) => Promise<RETURN>;
 
@@ -16,7 +16,7 @@ export type SlothkingMiddlewareHandler<ARGS = {}, CONTEXT = {}> = (
   fn: SlothkingHandler<ARGS, CONTEXT>
 ) => SlothkingHandler<ARGS, CONTEXT>;
 
-export type SlothkingEndpoint<ARGS = {}, CONTEXT = {}, RETURN = void> = {
+export type SlothkingEndpoint<ARGS = {}, CONTEXT = {}, RETURN = any> = {
   path: string;
   run?: SlothkingHandler<ARGS, CONTEXT, RETURN>;
   middlewares?: Array<string>;
