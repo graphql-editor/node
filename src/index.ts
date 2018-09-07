@@ -78,12 +78,24 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
   if (req.method.toUpperCase() === "OPTIONS") {
     return {};
   }
+  if (!connectedToDatabase && databaseURL) {
+    let tries = 0;
+    const cdb = async () => {
+      try {
+        await connect(databaseURL);
+        connectedToDatabase = true;
+      } catch (error) {
+        if (tries > 3) {
+          throw createError(500, "Can't connect to database");
+        }
+        tries++;
+        await cdb();
+      }
+    };
+    await cdb();
+  }
   if (req.url === "/health") {
     return {};
-  }
-  if (!connectedToDatabase && databaseURL) {
-    connect(databaseURL);
-    connectedToDatabase = true;
   }
   let pathEndpoints = extensions
     .map(e => {
@@ -118,7 +130,10 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
       ...qs.parse(parsedURL.query)
     };
   }
-  if (req.headers["content-type"] && req.headers["content-type"].split(";").includes("application/json")) {
+  if (
+    req.headers["content-type"] &&
+    req.headers["content-type"].split(";").includes("application/json")
+  ) {
     context.arguments = {
       ...context.arguments,
       ...(await json(req))
