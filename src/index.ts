@@ -1,5 +1,5 @@
 import { createError, json } from "micro";
-import { connect } from "mongoose";
+import { connect, connection } from "mongoose";
 import { parse } from "url";
 import * as Pattern from "url-pattern";
 import {
@@ -95,6 +95,9 @@ const run: SlothkingRunner = (extensions, databaseURL) => async (req, res) => {
     await cdb();
   }
   if (req.url === "/health") {
+    if(connection.readyState !== 1) {
+          throw createError(500, "could not connect to database");
+    }
     return {};
   }
   let pathEndpoints = extensions
